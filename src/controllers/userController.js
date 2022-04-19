@@ -239,10 +239,10 @@ const updateProfile = async (req, res) => {
                         return res.status(400).send({ status: false, message: ' Please provide shipping pincode' })
                     }
                     if (!validator.isValidPincode(address.shipping.pincode)) {
-                        return res.status(400).send({ status: false, message: 'please provide valid shipping pinCode' })
+                        return res.status(400).send({ status: false, message: 'please provide valid shipping pinCode(in digits)' })
                     }
                     if (!validator.isNumber(address.shipping.pincode)) {
-                        return res.status(400).send({ status: false, message: 'please provide shipping pinCode (in number)' })
+                        return res.status(400).send({ status: false, message: 'please provide shipping pinCode (in digits)' })
                     }
                     newData['address.shipping.pincode'] = address.shipping.pincode
                 }
@@ -266,10 +266,10 @@ const updateProfile = async (req, res) => {
                         return res.status(400).send({ status: false, message: ' Please provide billing pincode' })
                     }
                     if (!validator.isValidPincode(address.billing.pincode)) {
-                        return res.status(400).send({ status: false, message: 'please provide valid billing pinCode' })
+                        return res.status(400).send({ status: false, message: 'please provide valid billing pinCode (in digits)' })
                     }
                     if (!validator.isNumber(address.billing.pincode)) {
-                        return res.status(400).send({ status: false, message: 'please provide billing pinCode (in number)' })
+                        return res.status(400).send({ status: false, message: 'please provide billing pinCode (in digits)' })
                     }
                     newData['address.billing.pincode'] = address.billing.pincode
                 }

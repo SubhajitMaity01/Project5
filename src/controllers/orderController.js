@@ -32,8 +32,11 @@ const createOrder = async (req, res) => {
             if(!validator.isValidID(items[i].productId)) return res.status(400).send({ status: false, message: `Please provide Valid productId at position ${i+1}`})
 
             let isProductAvailable = await productModel.findOne({_id : items[i].productId})
-
             if(!isProductAvailable) return res.status(400).send({ status: false, message: `Product doesn't Exist for ProductId ${items[i].productId} at position ${i+1}`})
+
+            if(!validator.isValid(items[i].quantity)) return res.status(400).send({ status: false, message: `Please provide quantity at position ${i+1}`})
+            if(!validator.isNumber(items[i].quantity)) return res.status(400).send({ status: false, message: `Please provide quantity in digits at position ${i+1}`})
+
             if(!isProductAvailable.installments > 0)  return res.status(400).send({ status: false, message: `Product with ProductId ${items[i].productId} at position ${i+1} is OUT OF STOCK`})
 
             if(!items[i].quantity > 0) return res.status(400).send({ status: false, message: `Please provide min 1 quantity at position ${i+1}`})
@@ -106,7 +109,7 @@ const updateOrder =async (req, res) => {
 
             const items = orderMatch.items
             for(let i=0 ; i<items.length ; i++){
-                const updateProductDetails = await productModel.findOneAndUpdate(items[i].productId , {$inc: {installments: items[i].quantity} })
+                const updateProductDetails = await productModel.findOneAndUpdate({_id: items[i].productId} , {$inc: {installments: items[i].quantity} })
             }
             return res.status(200).send({status: true, message: "Order details Updated", data: order})
             }

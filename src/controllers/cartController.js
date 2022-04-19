@@ -23,7 +23,7 @@ const addToCart = async (req, res) => {
 
         // Searching : Product details 
         const isProductExist = await productModel.findOne({ _id: productId, isDeleted: false })
-        if (!isProductExist) return res.status(400).send({ status: false, message: "Product Doesn't Exist" })
+        if (!isProductExist) return res.status(404).send({ status: false, message: "Product Doesn't Exist" })
 
         // Searching : Cart details for user
         if (cartId) {
@@ -52,6 +52,7 @@ const addToCart = async (req, res) => {
                     isUserHasCart.items[i].quantity = isUserHasCart.items[i].quantity + 1
 
                     if(isUserHasCart.items[i].quantity > isProductExist.installments) return res.status(400).send({ status: true, message: "No such Quantity Exist"})
+
                     const updateCart = {}
                     updateCart['items'] = isUserHasCart.items
                     updateCart['totalPrice'] = isUserHasCart.totalPrice + price.price
@@ -86,7 +87,7 @@ const addToCart = async (req, res) => {
                 totalItems: 1
             }
             const createdCart = await cartModel.create(newCart)
-            return res.status(200).send({ status: false, message: "Product is added in cart", data: createdCart })
+            return res.status(201).send({ status: false, message: "Product is added in cart", data: createdCart })
         }
     }
     catch (err) {
@@ -111,14 +112,14 @@ const removeFromCart = async (req, res) => {
         if (!validator.isValid(productId)) return res.status(400).send({ status: false, message: "Plaes enter productId" })
         if (!validator.isValidID(productId)) return res.status(400).send({ status: false, message: "Plaes enter valid productId" })
         const isProductExist = await productModel.findOne({ _id: productId, isDeleted: false })
-        if (!isProductExist) return res.status(400).send({ status: false, message: "Product Doesn't Exist" })
+        if (!isProductExist) return res.status(404).send({ status: false, message: "Product Doesn't Exist" })
 
         if (!validator.isValid(removeProduct)) return res.status(400).send({ status: false, message: "Plaes enter removeProduct" })
 
         // Searching : user details 
         const userDetails = await userModel.find({ _id: userId })
         if (!userDetails.length > 0) return res.status(404).send({ status: false, message: "No user Found" })
-        if (isCartExist.userId != userId) return res.status(404).send({ status: false, message: "You are not owner of this Cart , please try with right cartId" })
+        if (isCartExist.userId != userId) return res.status(400).send({ status: false, message: "You are not owner of this Cart , please try with right cartId" })
 
         const price = await productModel.findOne({ _id: productId })
 

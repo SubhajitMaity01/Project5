@@ -25,7 +25,7 @@ const isValidID = function(id) {
 }
 
 const isValidSize = function (value) {
-    let enumValue = ["S", "XS", "M", "X", "L", "XXL", "XL","s", "xs", "m", "x", "l", "xxl", "xl"]
+    let enumValue = ["S", "XS", "M", "X", "L", "XXL", "XL"]
     for (let x of value) {
         if (enumValue.includes(x) == false)  return false
     }

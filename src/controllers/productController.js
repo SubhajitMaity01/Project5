@@ -131,7 +131,7 @@ const getProductByFilter = async (req, res) => {
                 const allProducts = await productModel.find(finalFilters).select({
                     title: 1, description: 1, price: 1, currencyFormat: 1, currencyId: 1, isFreeShipping: 1, productImage: 1, style: 1, availableSizes: 1, installments: 1, _id: 0
                 }).sort({ price: 1 })
-                if (allProducts.length == 0) return res.status(404).send({ status: false, message: "Product not Found" })
+                if (allProducts.length == 0) return res.status(404).send({ status: false, message: "No Product Found" })
                 return res.status(200).send({ status: true, message: "Product List", data: allProducts })
             }
             else if (priceSort == "-1") {
