@@ -55,11 +55,8 @@ const createOrder = async (req, res) => {
         finalData["deletedAt"] = ""
         finalData["isDeleted"] = false
 
-        if(cancellable!=null){
-            if(!(cancellable == "true" || cancellable == "false")) 
-                return res.status(400).send({ status: false, message: "Please Provide Valid Order cancellable Status"})
-            finalData["cancellable"] = cancellable
-        }
+        if(cancellable!=null) finalData["cancellable"] = cancellable
+        
         const order = await orderModel.create(finalData)
         return res.status(201).send({status: true, message: "Order details", data: order})
     }
