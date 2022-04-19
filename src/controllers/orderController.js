@@ -97,8 +97,6 @@ const updateOrder =async (req, res) => {
             finalUpdates["status"] = status
         }
         if (isDeleted != null) {
-
-            if(!(isDeleted == true || cancellable == false)) return res.status(400).send({ status: false, message: "Please Provide Valid Order isDeleted Status"})
        
             if(orderMatch.cancellable == true){
             finalUpdates["isDeleted"] = isDeleted
@@ -110,7 +108,6 @@ const updateOrder =async (req, res) => {
             for(let i=0 ; i<items.length ; i++){
                 const updateProductDetails = await productModel.findOneAndUpdate(items[i].productId , {$inc: {installments: items[i].quantity} })
             }
-
             return res.status(200).send({status: true, message: "Order details Updated", data: order})
             }
         }

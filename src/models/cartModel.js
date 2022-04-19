@@ -32,3 +32,7 @@ const cartSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('cart', cartSchema)
+//let model = mongoose.model('cart', cartSchema)
+
+
+//  hson = like includes

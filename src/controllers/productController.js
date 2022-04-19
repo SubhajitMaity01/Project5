@@ -199,8 +199,7 @@ const updateProductById = async (req, res) => {
         // Searching : user details 
         const productDetails = await productModel.findOne({ _id: productId, isDeleted: false })
         if (!productDetails) return res.status(404).send({ status: false, message: "Product not Found" })
-console.log("len",productImage)
-console.log("img",productImage[0])
+
         const { title, description, currencyId, currencyFormat, isFreeShipping, style } = dataForUpdates
 
         if (title != null) {
@@ -251,7 +250,7 @@ console.log("img",productImage[0])
         }
 
         
-        if ((productImage.length > 0 && typeof productImage[0] == "undefined")) {
+        if (productImage.length > 0 ) {
             var updateFileURL = await aws.uploadFile(productImage[0])
             newData['productImage'] = updateFileURL
         }
