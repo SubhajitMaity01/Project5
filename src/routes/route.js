@@ -7,10 +7,11 @@ const cartController = require("../controllers/cartController")
 const orderController = require("../controllers/orderController")
 const { authorization } = require("../middlewares/auth-mw")
 
+
 // --- User APIs -----------------------------------------------------------------------------------------------------------------------------------------------
 router.post("/register", userController.registerUser)
 router.post("/login", userController.loginUser)
-router.get("/user/:userId/profile", authorization , userController.getProfile)
+router.get("/user/:userId/profile", authorization,userController.getProfile)
 router.put("/user/:userId/profile", authorization, userController.updateProfile)
 
 // --- Product APIs --------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,10 +22,10 @@ router.put("/products/:productId", productController.updateProductById)
 router.delete("/products/:productId", productController.deleteProductById)
 
 // --- Cart APIs ------------------------------------------------------------------------------------------------------------------------------------------------
-router.post("/users/:userId/cart", authorization,  cartController.addToCart)
+router.post("/users/:userId/cart",authorization,  cartController.addToCart)
 router.put("/users/:userId/cart", authorization, cartController.removeFromCart)
 router.get("/users/:userId/cart", authorization, cartController.getCartData)
-router.delete("/users/:userId/cart", authorization, cartController.deleteAllDataFromCart)
+router.delete("/users/:userId/cart",authorization, cartController.deleteAllDataFromCart)
 
 // --- Order APIs -------------------------------------------------------------------------------------------------------------------------------------------------
 router.post("/users/:userId/orders", authorization, orderController.createOrder)

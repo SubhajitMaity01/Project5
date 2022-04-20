@@ -110,7 +110,7 @@ const loginUser = async (req, res) => {
         if (!validator.isValid(email)) return res.status(400).send({ status: false, message: " Please , enter email Id" })
         if (!validator.isValid(password)) return res.status(400).send({ status: false, message: " Please , enter password " })
 
-        //  CHECK : if email is not is proper format
+        //  CHECK : if email is not in proper format
         if (!validator.isValidEmail(email)) return res.status(400).send({ status: false, message: 'please provide valid email' })
 
         //  CHECK : user with entered password and email is exist or not
@@ -265,9 +265,11 @@ const updateProfile = async (req, res) => {
                     if (!validator.isValid(address.billing.pincode)) {
                         return res.status(400).send({ status: false, message: ' Please provide billing pincode' })
                     }
+                    //validate pincode is six digit or not
                     if (!validator.isValidPincode(address.billing.pincode)) {
                         return res.status(400).send({ status: false, message: 'please provide valid billing pinCode (in digits)' })
                     }
+                    //validate pincode is number or not
                     if (!validator.isNumber(address.billing.pincode)) {
                         return res.status(400).send({ status: false, message: 'please provide billing pinCode (in digits)' })
                     }

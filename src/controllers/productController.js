@@ -24,6 +24,7 @@ const createProduct = async (req, res) => {
         product['description'] = description
 
         if (!validator.isValid(data.price)) return res.status(400).send({ status: false, message: 'please provide price' })
+        //CHECK : price is number or not
         if (!validator.isNumber(data.price)) return res.status(400).send({ status: false, message: 'please provide price in digits' })
         product['price'] = data.price
 
